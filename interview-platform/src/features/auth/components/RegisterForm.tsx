@@ -53,3 +53,11 @@ export function RegisterForm() {
         router.push("/login");
         return;
       }
+
+      toast.success("Account created!");
+      router.push("/dashboard");
+      router.refresh();
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
