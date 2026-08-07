@@ -26,3 +26,18 @@ export function RegisterForm() {
     resolver: zodResolver(registerSchema),
     defaultValues: { role: "CANDIDATE" },
   });
+
+  const onSubmit = async (values: RegisterInput) => {
+    setIsSubmitting(true);
+    try {
+      const result = await registerUser(values);
+
+      if (!result.success) {
+        if (result.fieldErrors) {
+          for (const [field, messages] of Object.entries(result.fieldErrors)) {
+            setError(field as keyof RegisterInput, { message: messages[0] });
+          }
+        }
+        toast.error(result.error);
+        return;
+      }
