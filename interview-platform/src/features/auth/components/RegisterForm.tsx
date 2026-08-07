@@ -103,3 +103,10 @@ export function RegisterForm() {
           </label>
         </div>
       </div>
+
+      <Button type="submit" className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Creating account..." : "Create account"}
+      </Button>
+    </form>
+  );
+}
