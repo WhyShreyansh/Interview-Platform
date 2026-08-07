@@ -41,3 +41,15 @@ export function RegisterForm() {
         toast.error(result.error);
         return;
       }
+
+      const signInResult = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (signInResult?.error) {
+        toast.success("Account created — please log in.");
+        router.push("/login");
+        return;
+      }
