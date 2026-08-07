@@ -35,3 +35,10 @@ export function LoginForm() {
         toast.error("Invalid email or password");
         return;
       }
+
+      router.push("/dashboard");
+      router.refresh();
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
