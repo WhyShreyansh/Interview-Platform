@@ -22,4 +22,16 @@ export function LoginForm() {
     formState: { errors },
   } = useForm<LoginInput>({ resolver: zodResolver(loginSchema) });
 
-  
+  const onSubmit = async (values: LoginInput) => {
+    setIsSubmitting(true);
+    try {
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        toast.error("Invalid email or password");
+        return;
+      }
