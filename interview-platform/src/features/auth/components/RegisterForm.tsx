@@ -89,3 +89,17 @@ export function RegisterForm() {
           <p className="text-sm text-destructive">{errors.confirmPassword.message}</p>
         )}
       </div>
+
+      <div className="space-y-2">
+        <Label>I am joining as a...</Label>
+        <div className="flex gap-4">
+          <label className="flex items-center gap-2 text-sm">
+            <input type="radio" value="CANDIDATE" {...register("role")} defaultChecked />
+            Candidate
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input type="radio" value="INTERVIEWER" {...register("role")} />
+            Interviewer
+          </label>
+        </div>
+      </div>
