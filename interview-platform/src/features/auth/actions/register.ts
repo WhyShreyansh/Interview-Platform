@@ -28,3 +28,12 @@ export async function registerUser(input: RegisterInput): Promise<RegisterResult
       fieldErrors: { email: ["An account with this email already exists"] },
     };
   }
+
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  await prisma.user.create({
+    data: { name, email, password: hashedPassword, role },
+  });
+
+  return { success: true };
+}
