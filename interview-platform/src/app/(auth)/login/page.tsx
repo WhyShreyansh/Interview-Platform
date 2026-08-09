@@ -21,3 +21,24 @@ export default function LoginPage() {
           </p>
         </div>
       </div>
+
+      <div className="flex flex-1 items-center justify-center bg-background p-4">
+        <Card className="w-full max-w-sm border-none shadow-none lg:border lg:shadow-sm">
+          <CardHeader>
+            <CardTitle className="font-display text-xl">Sign in</CardTitle>
+            <CardDescription>Access your interviews as a candidate or interviewer.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <LoginForm />
+            <p className="mt-4 text-center text-sm text-muted-foreground">
+              No account?{" "}
+              <Link href="/register" className="font-medium text-primary underline-offset-4 hover:underline">
+                Register
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
