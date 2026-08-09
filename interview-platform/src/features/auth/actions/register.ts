@@ -17,3 +17,14 @@ export async function registerUser(input: RegisterInput): Promise<RegisterResult
       fieldErrors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
     };
   }
+
+  const { name, email, password, role } = parsed.data;
+
+  const existingUser = await prisma.user.findUnique({ where: { email } });
+  if (existingUser) {
+    return {
+      success: false,
+      error: "An account with this email already exists",
+      fieldErrors: { email: ["An account with this email already exists"] },
+    };
+  }
