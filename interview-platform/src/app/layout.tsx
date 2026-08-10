@@ -21,3 +21,8 @@ const monoFont = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-mono",
 });
+
+export const metadata: Metadata = {
+  title: "Interview Platform",
+  description: "Remote technical interview platform",
+};
