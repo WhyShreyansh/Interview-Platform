@@ -26,3 +26,14 @@ export const metadata: Metadata = {
   title: "Interview Platform",
   description: "Remote technical interview platform",
 };
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={cn(displayFont.variable, sansFont.variable, monoFont.variable)}>
+      <body className="min-h-screen bg-background font-sans antialiased">
+        {children}
+        <Toaster richColors position="top-center" />
+      </body>
+    </html>
+  );
+}
