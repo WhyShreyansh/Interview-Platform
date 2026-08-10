@@ -23,3 +23,12 @@ export async function GET(req: NextRequest) {
   if (!apiKey || !apiSecret) {
     return NextResponse.json({ error: "LiveKit is not configured on the server" }, { status: 500 });
   }
+
+  const token = new AccessToken(apiKey, apiSecret, {
+    identity: session.user.id,
+    name: session.user.name ?? "Participant",
+  });
+  token.addGrant({ room: roomId, roomJoin: true, canPublish: true, canSubscribe: true });
+
+  return NextResponse.json({ token: await token.toJwt() });
+}
