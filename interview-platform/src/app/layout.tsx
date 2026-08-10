@@ -9,3 +9,15 @@ const displayFont = Space_Grotesk({
   weight: ["500", "600", "700"],
   variable: "--font-display",
 });
+
+const sansFont = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-sans",
+});
+
+const monoFont = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-mono",
+});
