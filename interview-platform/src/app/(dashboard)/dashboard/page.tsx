@@ -29,3 +29,8 @@ export default async function DashboardPage() {
         </div>
         {isInterviewer && <CreateInterviewDialog />}
       </div>
+
+      <InterviewList interviews={interviews} currentRole={session.user.role} />
+    </div>
+  );
+}
