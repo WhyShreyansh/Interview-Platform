@@ -24,3 +24,15 @@ function getOrCreateRoom(roomId: string): RoomState {
   }
   return room;
 }
+
+io.on("connection", (socket) => {
+  let joinedRoomId: string | null = null;
+
+  socket.on("room:join", ({ roomId, userId, name }) => {
+    joinedRoomId = roomId;
+    socket.join(roomId);
+    const room = getOrCreateRoom(roomId);
+    room.participants.set(socket.id, { userId, name });
+    socket.emit("room:state", { code: room.code, participants: Array.from(room.participants.values()) });
+    io.to(roomId).emit("presence:update", { participants: Array.from(room.participants.values()) });
+  });
