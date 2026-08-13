@@ -71,3 +71,5 @@ const SelectItem = React.forwardRef<
   </SelectPrimitive.Item>
 ));
 SelectItem.displayName = SelectPrimitive.Item.displayName;
+
+export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectItem };
