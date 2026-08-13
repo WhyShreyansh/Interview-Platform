@@ -1,0 +1,26 @@
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { PrismaClient } from "@prisma/client";
+import type {
+  ClientToServerEvents, ServerToClientEvents, CodeState, PresenceUser,
+} from "../src/features/room/types/events";
+
+const prisma = new PrismaClient();
+const PORT = process.env.SOCKET_PORT ? Number(process.env.SOCKET_PORT) : 4000;
+
+const httpServer = createServer();
+const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
+  cors: { origin: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000", methods: ["GET", "POST"] },
+});
+
+type RoomState = { code: CodeState; participants: Map<string, PresenceUser> };
+const rooms = new Map<string, RoomState>();
+
+function getOrCreateRoom(roomId: string): RoomState {
+  let room = rooms.get(roomId);
+  if (!room) {
+    room = { code: { code: "// Start coding here\n", language: "javascript" }, participants: new Map() };
+    rooms.set(roomId, room);
+  }
+  return room;
+}
