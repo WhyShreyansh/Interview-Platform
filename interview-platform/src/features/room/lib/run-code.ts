@@ -91,3 +91,16 @@ async function getPyodide(): Promise<PyodideInterface> {
   }
   return pyodidePromise;
 }
+
+export async function runPython(code: string): Promise<RunResult> {
+  const logs: string[] = [];
+  try {
+    const pyodide = await getPyodide();
+    pyodide.setStdout({ batched: (s: string) => logs.push(s) });
+    pyodide.setStderr({ batched: (s: string) => logs.push(s) });
+    await pyodide.runPythonAsync(code);
+    return { logs, error: null };
+  } catch (err) {
+    return { logs, error: err instanceof Error ? err.message : "Failed to run Python" };
+  }
+}
