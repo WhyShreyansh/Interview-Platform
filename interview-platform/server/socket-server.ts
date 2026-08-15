@@ -36,3 +36,9 @@ io.on("connection", (socket) => {
     socket.emit("room:state", { code: room.code, participants: Array.from(room.participants.values()) });
     io.to(roomId).emit("presence:update", { participants: Array.from(room.participants.values()) });
   });
+
+  socket.on("code:change", ({ roomId, code }) => {
+    const room = getOrCreateRoom(roomId);
+    room.code.code = code;
+    socket.to(roomId).emit("code:change", { code });
+  });
