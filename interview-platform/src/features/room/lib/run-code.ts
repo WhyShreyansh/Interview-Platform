@@ -104,3 +104,9 @@ export async function runPython(code: string): Promise<RunResult> {
     return { logs, error: err instanceof Error ? err.message : "Failed to run Python" };
   }
 }
+
+export async function runCode(code: string, language: "javascript" | "typescript" | "python"): Promise<RunResult> {
+  if (language === "javascript") return runJavaScript(code);
+  if (language === "typescript") return runTypeScript(code);
+  return runPython(code);
+}
