@@ -46,3 +46,14 @@ export async function runJavaScript(code: string): Promise<RunResult> {
     worker.postMessage(code);
   });
 }
+
+export async function runTypeScript(code: string): Promise<RunResult> {
+  const res = await fetch("/api/code/transpile", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ code }),
+  });
+  const data = await res.json();
+  if (!res.ok) return { logs: [], error: data.error ?? "Failed to transpile TypeScript" };
+  return runJavaScript(data.js);
+}
