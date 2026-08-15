@@ -72,3 +72,13 @@ io.on("connection", (socket) => {
   socket.on("timer:stop", ({ roomId }) => {
     io.to(roomId).emit("timer:stop");
   });
+
+  socket.on("disconnect", () => {
+    if (!joinedRoomId) return;
+    const room = rooms.get(joinedRoomId);
+    if (!room) return;
+    room.participants.delete(socket.id);
+    io.to(joinedRoomId).emit("presence:update", { participants: Array.from(room.participants.values()) });
+    if (room.participants.size === 0) rooms.delete(joinedRoomId);
+  });
+});
