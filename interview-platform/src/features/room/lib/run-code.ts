@@ -69,3 +69,16 @@ type PyodideInterface = {
   setStdout: (opts: { batched: (s: string) => void }) => void;
   setStderr: (opts: { batched: (s: string) => void }) => void;
 };
+
+let pyodidePromise: Promise<PyodideInterface> | null = null;
+
+function loadPyodideScript(): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (window.loadPyodide) return resolve();
+    const script = document.createElement("script");
+    script.src = "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js";
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error("Failed to load Python runtime"));
+    document.head.appendChild(script);
+  });
+}
