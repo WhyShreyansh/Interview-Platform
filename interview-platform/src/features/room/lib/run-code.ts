@@ -22,3 +22,13 @@ const WORKER_SOURCE = `
     }
   };
 `;
+
+export async function runJavaScript(code: string): Promise<RunResult> {
+  return new Promise((resolve) => {
+    const blob = new Blob([WORKER_SOURCE], { type: "application/javascript" });
+    const worker = new Worker(URL.createObjectURL(blob));
+
+    const timeout = setTimeout(() => {
+      worker.terminate();
+      resolve({ logs: [], error: `Execution timed out after ${WORKER_TIMEOUT_MS / 1000}s (possible infinite loop)` });
+    }, WORKER_TIMEOUT_MS);
