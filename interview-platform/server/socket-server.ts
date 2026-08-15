@@ -64,3 +64,7 @@ io.on("connection", (socket) => {
       console.error("Failed to persist chat message:", err);
     }
   });
+
+  socket.on("timer:start", ({ roomId, durationSeconds, startedAt }) => {
+    io.to(roomId).emit("timer:start", { durationSeconds, startedAt });
+  });
