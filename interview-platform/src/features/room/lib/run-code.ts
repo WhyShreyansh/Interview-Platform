@@ -32,3 +32,17 @@ export async function runJavaScript(code: string): Promise<RunResult> {
       worker.terminate();
       resolve({ logs: [], error: `Execution timed out after ${WORKER_TIMEOUT_MS / 1000}s (possible infinite loop)` });
     }, WORKER_TIMEOUT_MS);
+
+    worker.onmessage = (e: MessageEvent<RunResult>) => {
+      clearTimeout(timeout);
+      worker.terminate();
+      resolve(e.data);
+    };
+    worker.onerror = (e) => {
+      clearTimeout(timeout);
+      worker.terminate();
+      resolve({ logs: [], error: e.message });
+    };
+    worker.postMessage(code);
+  });
+}
