@@ -57,3 +57,9 @@ export async function runTypeScript(code: string): Promise<RunResult> {
   if (!res.ok) return { logs: [], error: data.error ?? "Failed to transpile TypeScript" };
   return runJavaScript(data.js);
 }
+
+declare global {
+  interface Window {
+    loadPyodide?: (opts: { indexURL: string }) => Promise<PyodideInterface>;
+  }
+}
