@@ -42,3 +42,9 @@ io.on("connection", (socket) => {
     room.code.code = code;
     socket.to(roomId).emit("code:change", { code });
   });
+
+  socket.on("code:language", ({ roomId, language }) => {
+    const room = getOrCreateRoom(roomId);
+    room.code.language = language;
+    socket.to(roomId).emit("code:language", { language });
+  });
