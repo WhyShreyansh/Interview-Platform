@@ -82,3 +82,12 @@ function loadPyodideScript(): Promise<void> {
     document.head.appendChild(script);
   });
 }
+
+async function getPyodide(): Promise<PyodideInterface> {
+  if (!pyodidePromise) {
+    pyodidePromise = loadPyodideScript().then(() =>
+      window.loadPyodide!({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/" })
+    );
+  }
+  return pyodidePromise;
+}
