@@ -63,3 +63,9 @@ declare global {
     loadPyodide?: (opts: { indexURL: string }) => Promise<PyodideInterface>;
   }
 }
+
+type PyodideInterface = {
+  runPythonAsync: (code: string) => Promise<unknown>;
+  setStdout: (opts: { batched: (s: string) => void }) => void;
+  setStderr: (opts: { batched: (s: string) => void }) => void;
+};
