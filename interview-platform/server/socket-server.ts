@@ -52,3 +52,15 @@ io.on("connection", (socket) => {
   socket.on("whiteboard:update", ({ roomId, elements, appState }) => {
     socket.to(roomId).emit("whiteboard:update", { elements, appState });
   });
+
+  socket.on("chat:send", async ({ roomId, senderId, senderName, message }) => {
+    try {
+      const saved = await prisma.message.create({ data: { roomId, senderId, message } });
+      io.to(roomId).emit("chat:message", {
+        id: saved.id, roomId, senderId, senderName, message: saved.message,
+        createdAt: saved.createdAt.toISOString(),
+      });
+    } catch (err) {
+      console.error("Failed to persist chat message:", err);
+    }
+  });
