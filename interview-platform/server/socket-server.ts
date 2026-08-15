@@ -82,3 +82,7 @@ io.on("connection", (socket) => {
     if (room.participants.size === 0) rooms.delete(joinedRoomId);
   });
 });
+
+httpServer.listen(PORT, () => {
+  console.log(`Socket.IO server listening on :${PORT}`);
+});
