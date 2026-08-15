@@ -48,3 +48,7 @@ io.on("connection", (socket) => {
     room.code.language = language;
     socket.to(roomId).emit("code:language", { language });
   });
+
+  socket.on("whiteboard:update", ({ roomId, elements, appState }) => {
+    socket.to(roomId).emit("whiteboard:update", { elements, appState });
+  });
