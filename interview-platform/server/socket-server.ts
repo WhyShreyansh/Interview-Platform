@@ -68,3 +68,7 @@ io.on("connection", (socket) => {
   socket.on("timer:start", ({ roomId, durationSeconds, startedAt }) => {
     io.to(roomId).emit("timer:start", { durationSeconds, startedAt });
   });
+
+  socket.on("timer:stop", ({ roomId }) => {
+    io.to(roomId).emit("timer:stop");
+  });
