@@ -49,3 +49,11 @@ export function VideoRoom({ roomId }: { roomId: string }) {
       </div>
     );
   }
+
+  if (error) {
+    return (
+      <div className="flex h-full items-center justify-center p-4 text-center text-sm text-muted-foreground">
+        {error}
+      </div>
+    );
+  }
