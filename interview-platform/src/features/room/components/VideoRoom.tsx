@@ -65,3 +65,12 @@ export function VideoRoom({ roomId }: { roomId: string }) {
       </div>
     );
   }
+
+  return (
+    <LiveKitRoom token={token} serverUrl={livekitUrl} connect video audio data-lk-theme="default" style={{ height: "100%" }}>
+      <VideoGrid />
+      <RoomAudioRenderer />
+      <ControlBar variation="minimal" />
+    </LiveKitRoom>
+  );
+}
