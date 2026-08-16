@@ -22,3 +22,21 @@ export function Chat({
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [draft, setDraft] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleMessage = (msg: ChatMessage) => setMessages((prev) => [...prev, msg]);
+    socket.on("chat:message", handleMessage);
+    return () => { socket.off("chat:message", handleMessage); };
+  }, [socket]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+  }, [messages]);
+
+  const sendMessage = () => {
+    const trimmed = draft.trim();
+    if (!trimmed || !socket) return;
+    socket.emit("chat:send", { roomId, senderId: currentUserId, senderName: currentUserName, message: trimmed });
+    setDraft("");
+  };
