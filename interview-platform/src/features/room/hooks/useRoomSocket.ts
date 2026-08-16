@@ -31,3 +31,9 @@ export function useRoomSocket({ roomId, userId, name }: { roomId: string; userId
       socketRef.current = null;
       setSocket(null);
     };
+
+  }, [roomId, userId, name]);
+
+  return { socket, isConnected, participants };
+}
+
