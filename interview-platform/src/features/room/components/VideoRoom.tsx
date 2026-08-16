@@ -57,3 +57,11 @@ export function VideoRoom({ roomId }: { roomId: string }) {
       </div>
     );
   }
+
+  if (!token) {
+    return (
+      <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+        Connecting to video...
+      </div>
+    );
+  }
