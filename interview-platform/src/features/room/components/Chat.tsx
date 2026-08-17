@@ -61,3 +61,17 @@ export function Chat({
           );
         })}
       </div>
+      <div className="flex items-center gap-2 border-t p-2">
+        <Input
+          placeholder="Type a message..."
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter") sendMessage(); }}
+        />
+        <Button size="icon" onClick={sendMessage} disabled={!draft.trim()}>
+          <Send className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
+}
