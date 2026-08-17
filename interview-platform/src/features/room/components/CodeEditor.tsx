@@ -92,3 +92,44 @@ export function CodeEditor({ socket, roomId }: { socket: AppSocket | null; roomI
       setIsRunning(false);
     }
   };
+
+  return (
+    <div className="flex h-full flex-col">
+      <div className="flex items-center justify-between border-b bg-muted/40 p-2">
+        <span className="font-mono text-xs uppercase tracking-wide text-muted-foreground">
+          Code editor
+        </span>
+        <div className="flex items-center gap-2">
+          <Select value={language} onValueChange={handleLanguageChange}>
+            <SelectTrigger className="w-40">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {LANGUAGES.map((lang) => (
+                <SelectItem key={lang.value} value={lang.value}>
+                  {lang.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button size="sm" onClick={handleRun} disabled={isRunning}>
+            {isRunning ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Play className="mr-2 h-4 w-4" />
+            )}
+            Run
+          </Button>
+        </div>
+      </div>
+      <div className="flex-1 overflow-hidden">
+        <Editor
+          height="100%"
+          language={language}
+          value={code}
+          onChange={handleEditorChange}
+          onMount={handleMount}
+          theme="vs-dark"
+          options={{ minimap: { enabled: false }, fontSize: 14, automaticLayout: true }}
+        />
+      </div>
