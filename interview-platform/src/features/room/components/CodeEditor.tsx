@@ -133,3 +133,30 @@ export function CodeEditor({ socket, roomId }: { socket: AppSocket | null; roomI
           options={{ minimap: { enabled: false }, fontSize: 14, automaticLayout: true }}
         />
       </div>
+
+      {showOutput && (
+        <div className="h-40 shrink-0 overflow-y-auto border-t bg-black p-3 font-mono text-xs text-green-400">
+          <div className="mb-1 flex items-center justify-between text-muted-foreground">
+            <span>
+              Output{" "}
+              {language === "python" &&
+                "(first run downloads the Python runtime — may take a few seconds)"}
+            </span>
+            <button onClick={() => setShowOutput(false)} aria-label="Close output">
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+          {result?.logs.map((line, i) => (
+            <div key={i} className="whitespace-pre-wrap">
+              {line}
+            </div>
+          ))}
+          {result?.error && <div className="whitespace-pre-wrap text-red-400">{result.error}</div>}
+          {!result?.logs.length && !result?.error && (
+            <div className="text-muted-foreground">(no output)</div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
