@@ -27,3 +27,25 @@ export function RoomClient({
   const { socket, isConnected, participants } = useRoomSocket({
     roomId, userId: currentUser.id, name: currentUser.name,
   });
+
+  return (
+    <div className="flex h-screen flex-col bg-background">
+      <header className="flex items-center justify-between border-b px-4 py-2">
+        <div className="flex items-center gap-3">
+          <h1 className="font-display font-semibold">{title}</h1>
+          <Badge variant={isConnected ? "live" : "secondary"}>
+            <span className={`h-1.5 w-1.5 rounded-full ${isConnected ? "bg-[hsl(var(--status-live))] animate-pulse" : "bg-muted-foreground"}`} />
+            {isConnected ? "Live" : "Connecting"}
+          </Badge>
+          <span className="flex items-center gap-1 font-mono text-sm text-muted-foreground">
+            <Users className="h-4 w-4" />
+            {participants.length}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <Timer socket={socket} roomId={roomId} durationMinutes={durationMinutes} canControl={currentUser.role === "INTERVIEWER"} />
+          <Button variant="destructive" size="sm" onClick={() => router.push("/dashboard")}>
+            <PhoneOff className="mr-2 h-4 w-4" />
+            Leave
+          </Button>
+        </div>
