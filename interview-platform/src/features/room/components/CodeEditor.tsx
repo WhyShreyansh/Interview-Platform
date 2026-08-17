@@ -81,3 +81,14 @@ export function CodeEditor({ socket, roomId }: { socket: AppSocket | null; roomI
   const handleMount: OnMount = (editor) => {
     editor.focus();
   };
+
+  const handleRun = async () => {
+    setIsRunning(true);
+    setShowOutput(true);
+    try {
+      const runResult = await runCode(code, language);
+      setResult(runResult);
+    } finally {
+      setIsRunning(false);
+    }
+  };
