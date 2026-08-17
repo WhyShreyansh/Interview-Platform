@@ -49,3 +49,27 @@ export function RoomClient({
             Leave
           </Button>
         </div>
+
+        </header>
+
+      <div className="grid flex-1 grid-cols-[280px_1fr_320px] overflow-hidden">
+        <aside className="border-r">
+          <VideoRoom roomId={roomId} />
+        </aside>
+
+        <main className="overflow-hidden">
+          <Tabs defaultValue="editor" className="flex h-full flex-col">
+            <div className="border-b px-2 pt-2">
+              <TabsList>
+                <TabsTrigger value="editor">Code Editor</TabsTrigger>
+                <TabsTrigger value="whiteboard">Whiteboard</TabsTrigger>
+              </TabsList>
+            </div>
+            <TabsContent value="editor" className="flex-1 overflow-hidden">
+              <CodeEditor socket={socket} roomId={roomId} />
+            </TabsContent>
+            <TabsContent value="whiteboard" className="flex-1 overflow-hidden">
+              <Whiteboard socket={socket} roomId={roomId} />
+            </TabsContent>
+          </Tabs>
+        </main>
