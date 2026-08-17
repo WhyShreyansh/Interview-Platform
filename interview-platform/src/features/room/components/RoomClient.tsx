@@ -73,3 +73,17 @@ export function RoomClient({
             </TabsContent>
           </Tabs>
         </main>
+
+        <aside className="border-l">
+          <Chat
+            socket={socket}
+            roomId={roomId}
+            currentUserId={currentUser.id}
+            currentUserName={currentUser.name}
+            initialMessages={initialMessages}
+          />
+        </aside>
+      </div>
+    </div>
+  );
+}
