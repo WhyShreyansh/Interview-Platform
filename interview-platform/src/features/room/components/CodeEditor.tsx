@@ -50,3 +50,14 @@ export function CodeEditor({ socket, roomId }: { socket: AppSocket | null; roomI
     const handleLanguage = ({ language: incoming }: { language: CodeState["language"] }) => {
       setLanguage(incoming);
     };
+
+    socket.on("room:state", handleState);
+    socket.on("code:change", handleChange);
+    socket.on("code:language", handleLanguage);
+
+    return () => {
+      socket.off("room:state", handleState);
+      socket.off("code:change", handleChange);
+      socket.off("code:language", handleLanguage);
+    };
+  }, [socket]);
