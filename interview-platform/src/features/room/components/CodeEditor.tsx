@@ -61,3 +61,23 @@ export function CodeEditor({ socket, roomId }: { socket: AppSocket | null; roomI
       socket.off("code:language", handleLanguage);
     };
   }, [socket]);
+
+  const handleEditorChange = (value: string | undefined) => {
+    const next = value ?? "";
+    setCode(next);
+
+    if (isRemoteUpdate.current) {
+      isRemoteUpdate.current = false;
+      return;
+    }
+    socket?.emit("code:change", { roomId, code: next });
+  };
+
+  const handleLanguageChange = (value: CodeState["language"]) => {
+    setLanguage(value);
+    socket?.emit("code:language", { roomId, language: value });
+  };
+
+  const handleMount: OnMount = (editor) => {
+    editor.focus();
+  };
