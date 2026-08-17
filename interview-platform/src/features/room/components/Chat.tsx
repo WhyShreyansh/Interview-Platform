@@ -40,3 +40,24 @@ export function Chat({
     socket.emit("chat:send", { roomId, senderId: currentUserId, senderName: currentUserName, message: trimmed });
     setDraft("");
   };
+
+  return (
+    <div className="flex h-full flex-col">
+      <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto p-3">
+        {messages.length === 0 && (
+          <p className="text-center text-sm text-muted-foreground">No messages yet.</p>
+        )}
+        {messages.map((msg) => {
+          const isOwn = msg.senderId === currentUserId;
+          return (
+            <div key={msg.id} className={`flex flex-col ${isOwn ? "items-end" : "items-start"}`}>
+              <span className="text-xs text-muted-foreground">
+                {msg.senderName} · {format(new Date(msg.createdAt), "p")}
+              </span>
+              <div className={`max-w-[85%] rounded-lg px-3 py-1.5 text-sm ${isOwn ? "bg-primary text-primary-foreground" : "bg-muted"}`}>
+                {msg.message}
+              </div>
+            </div>
+          );
+        })}
+      </div>
