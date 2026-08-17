@@ -26,3 +26,27 @@ const LANGUAGES: { value: CodeState["language"]; label: string }[] = [
   { value: "typescript", label: "TypeScript" },
   { value: "python", label: "Python" },
 ];
+
+export function CodeEditor({ socket, roomId }: { socket: AppSocket | null; roomId: string }) {
+  const [code, setCode] = useState("// Start coding here\n");
+  const [language, setLanguage] = useState<CodeState["language"]>("javascript");
+  const [isRunning, setIsRunning] = useState(false);
+  const [result, setResult] = useState<RunResult | null>(null);
+  const [showOutput, setShowOutput] = useState(false);
+  const isRemoteUpdate = useRef(false);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleState = ({ code: initial }: { code: CodeState }) => {
+      isRemoteUpdate.current = true;
+      setCode(initial.code);
+      setLanguage(initial.language);
+    };
+    const handleChange = ({ code: incoming }: { code: string }) => {
+      isRemoteUpdate.current = true;
+      setCode(incoming);
+    };
+    const handleLanguage = ({ language: incoming }: { language: CodeState["language"] }) => {
+      setLanguage(incoming);
+    };
