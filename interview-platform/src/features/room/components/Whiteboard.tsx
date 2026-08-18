@@ -57,3 +57,18 @@ export function Whiteboard({ socket, roomId }: { socket: AppSocket | null; roomI
       }, 150),
     [socket, roomId]
   );
+
+  useEffect(() => {
+    if (!socket) return;
+
+    const handleUpdate = ({ elements }: { elements: unknown }) => {
+      if (!apiRef.current) return;
+      suppressNextChange.current = true;
+      apiRef.current.updateScene({ elements: elements as never });
+    };
+
+    socket.on("whiteboard:update", handleUpdate);
+    return () => {
+      socket.off("whiteboard:update", handleUpdate);
+    };
+  }, [socket]);
