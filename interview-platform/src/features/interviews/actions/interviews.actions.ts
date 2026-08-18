@@ -43,3 +43,21 @@ export async function createInterview(input: CreateInterviewInput): Promise<Acti
       fieldErrors: { candidateEmail: ["No account found with that email"] },
     };
   }
+
+  if (candidate.role !== "CANDIDATE") {
+    return {
+      success: false,
+      error: "That email belongs to an interviewer, not a candidate",
+      fieldErrors: { candidateEmail: ["That email belongs to an interviewer, not a candidate"] },
+    };
+  }
+
+  const interview = await prisma.interview.create({
+    data: {
+      title,
+      date: new Date(date),
+      duration,
+      interviewerId: session.user.id,
+      candidateId: candidate.id,
+    },
+  });
