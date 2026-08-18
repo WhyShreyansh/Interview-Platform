@@ -38,3 +38,18 @@ export function Timer({
   const start = () => socket?.emit("timer:start", { roomId, durationSeconds: durationMinutes * 60, startedAt: Date.now() });
   const stop = () => socket?.emit("timer:stop", { roomId });
 
+  return (
+    <div className="flex items-center gap-2 rounded-md border bg-muted/40 px-2.5 py-1">
+      <Clock className="h-4 w-4 text-muted-foreground" />
+      <span className={`font-mono text-sm tabular-nums ${remaining !== null && remaining <= 60 ? "text-destructive" : ""}`}>
+        {remaining !== null ? formatTime(remaining) : `${durationMinutes}:00`}
+      </span>
+      {canControl && (
+        <Button size="icon" variant="ghost" className="h-6 w-6" onClick={running ? stop : start}>
+          {running ? <Square className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+        </Button>
+      )}
+    </div>
+  );
+}
+
