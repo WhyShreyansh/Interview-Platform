@@ -72,3 +72,23 @@ export function Whiteboard({ socket, roomId }: { socket: AppSocket | null; roomI
       socket.off("whiteboard:update", handleUpdate);
     };
   }, [socket]);
+
+  return (
+    <div className="h-full w-full">
+      <Excalidraw
+        excalidrawAPI={(api) => {
+          apiRef.current = api;
+          setReady(true);
+        }}
+        onChange={(elements) => {
+          if (!ready) return;
+          if (suppressNextChange.current) {
+            suppressNextChange.current = false;
+            return;
+          }
+          throttledEmit(elements);
+        }}
+      />
+    </div>
+  );
+}
