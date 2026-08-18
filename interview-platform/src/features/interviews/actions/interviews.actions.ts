@@ -11,3 +11,14 @@ import {
 type ActionResult =
   | { success: true; roomId: string }
   | { success: false; error: string; fieldErrors?: Record<string, string[]> };
+
+export async function createInterview(input: CreateInterviewInput): Promise<ActionResult> {
+  const session = await auth();
+
+  if (!session) {
+    return { success: false, error: "Your session has expired. Please sign out and sign back in." };
+  }
+
+  if (session.user.role !== "INTERVIEWER") {
+    return { success: false, error: "Only interviewers can schedule interviews" };
+  }
