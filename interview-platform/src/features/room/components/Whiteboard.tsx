@@ -44,3 +44,16 @@ function throttle<Args extends unknown[]>(fn: (...args: Args) => void, waitMs: n
     }
   };
 }
+
+export function Whiteboard({ socket, roomId }: { socket: AppSocket | null; roomId: string }) {
+  const apiRef = useRef<ExcalidrawImperativeAPI | null>(null);
+  const suppressNextChange = useRef(false);
+  const [ready, setReady] = useState(false);
+
+  const throttledEmit = useMemo(
+    () =>
+      throttle((elements: unknown) => {
+        socket?.emit("whiteboard:update", { roomId, elements });
+      }, 150),
+    [socket, roomId]
+  );
