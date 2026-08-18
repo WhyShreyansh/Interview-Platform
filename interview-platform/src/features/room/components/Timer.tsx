@@ -27,3 +27,4 @@ export function Timer({
       const elapsed = Math.floor((Date.now() - startedAt) / 1000);
       setRemaining(durationSeconds - elapsed);
     };
+  }, [socket]);
