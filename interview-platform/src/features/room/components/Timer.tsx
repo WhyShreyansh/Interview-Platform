@@ -13,3 +13,17 @@ function formatTime(totalSeconds: number) {
   const s = Math.max(0, totalSeconds) % 60;
   return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
 }
+
+export function Timer({
+  socket, roomId, durationMinutes, canControl,
+}: { socket: AppSocket | null; roomId: string; durationMinutes: number; canControl: boolean }) {
+  const [remaining, setRemaining] = useState<number | null>(null);
+  const [running, setRunning] = useState(false);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handleStart = ({ durationSeconds, startedAt }: { durationSeconds: number; startedAt: number }) => {
+      setRunning(true);
+      const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+      setRemaining(durationSeconds - elapsed);
+    };
