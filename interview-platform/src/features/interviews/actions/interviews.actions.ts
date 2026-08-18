@@ -22,3 +22,24 @@ export async function createInterview(input: CreateInterviewInput): Promise<Acti
   if (session.user.role !== "INTERVIEWER") {
     return { success: false, error: "Only interviewers can schedule interviews" };
   }
+
+  const parsed = createInterviewSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      success: false,
+      error: "Invalid input",
+      fieldErrors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+    };
+  }
+
+  const { title, candidateEmail, date, duration } = parsed.data;
+
+  const candidate = await prisma.user.findUnique({ where: { email: candidateEmail } });
+
+  if (!candidate) {
+    return {
+      success: false,
+      error: "No account found with that email",
+      fieldErrors: { candidateEmail: ["No account found with that email"] },
+    };
+  }
