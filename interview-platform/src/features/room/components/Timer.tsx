@@ -28,3 +28,13 @@ export function Timer({
       setRemaining(durationSeconds - elapsed);
     };
   }, [socket]);
+
+  useEffect(() => {
+    if (!running || remaining === null || remaining <= 0) return;
+    const interval = setInterval(() => setRemaining((prev) => (prev === null ? null : prev - 1)), 1000);
+    return () => clearInterval(interval);
+  }, [running, remaining]);
+
+  const start = () => socket?.emit("timer:start", { roomId, durationSeconds: durationMinutes * 60, startedAt: Date.now() });
+  const stop = () => socket?.emit("timer:stop", { roomId });
+
