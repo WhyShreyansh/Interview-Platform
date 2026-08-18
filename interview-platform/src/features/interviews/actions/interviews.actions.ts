@@ -61,3 +61,8 @@ export async function createInterview(input: CreateInterviewInput): Promise<Acti
       candidateId: candidate.id,
     },
   });
+
+  revalidatePath("/dashboard");
+
+  return { success: true, roomId: interview.roomId };
+}
