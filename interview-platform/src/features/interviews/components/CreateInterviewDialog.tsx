@@ -76,3 +76,19 @@ export function CreateInterviewDialog() {
       setIsSubmitting(false);
     }
   };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" />
+          Create interview
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle className="font-display">Schedule an interview</DialogTitle>
+          <DialogDescription>
+            The candidate must already have an account. A unique room link is generated automatically.
+          </DialogDescription>
+        </DialogHeader>
