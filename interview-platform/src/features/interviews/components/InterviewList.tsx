@@ -15,3 +15,30 @@ type InterviewListItem = {
   interviewer: { id: string; name: string; email: string };
   candidate: { id: string; name: string; email: string };
 };
+
+const STATUS_CONFIG = {
+  SCHEDULED: {
+    rail: "bg-[hsl(var(--status-scheduled))]",
+    text: "text-[hsl(var(--status-scheduled))]",
+    label: "Scheduled",
+    pulse: false,
+  },
+  IN_PROGRESS: {
+    rail: "bg-[hsl(var(--status-live))]",
+    text: "text-[hsl(var(--status-live))]",
+    label: "Live",
+    pulse: true,
+  },
+  COMPLETED: {
+    rail: "bg-[hsl(var(--status-completed))]",
+    text: "text-[hsl(var(--status-completed))]",
+    label: "Completed",
+    pulse: false,
+  },
+  CANCELLED: {
+    rail: "bg-[hsl(var(--status-cancelled))]",
+    text: "text-[hsl(var(--status-cancelled))]",
+    label: "Cancelled",
+    pulse: false,
+  },
+} as const;
