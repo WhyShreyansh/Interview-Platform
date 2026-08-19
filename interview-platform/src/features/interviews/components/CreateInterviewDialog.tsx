@@ -52,3 +52,18 @@ export function CreateInterviewDialog() {
     resolver: zodResolver(createInterviewSchema),
     defaultValues: { duration: 60 },
   });
+
+  const onSubmit = async (values: CreateInterviewInput) => {
+    setIsSubmitting(true);
+    try {
+      const result = await createInterview(values);
+
+      if (!result.success) {
+        if (result.fieldErrors) {
+          for (const [field, messages] of Object.entries(result.fieldErrors)) {
+            setError(field as keyof CreateInterviewInput, { message: messages[0] });
+          }
+        }
+        toast.error(result.error);
+        return;
+      }
