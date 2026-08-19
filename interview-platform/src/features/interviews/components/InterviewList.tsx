@@ -42,3 +42,26 @@ const STATUS_CONFIG = {
     pulse: false,
   },
 } as const;
+
+export function InterviewList({
+  interviews,
+  currentRole,
+}: {
+  interviews: InterviewListItem[];
+  currentRole: UserRole;
+}) {
+  if (interviews.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed py-16 text-center">
+        <CalendarPlus className="h-8 w-8 text-muted-foreground" />
+        <div>
+          <p className="font-medium">No interviews yet</p>
+          <p className="text-sm text-muted-foreground">
+            {currentRole === "INTERVIEWER"
+              ? "Schedule your first interview to generate a room link."
+              : "Interviews an interviewer schedules with you will show up here."}
+          </p>
+        </div>
+      </div>
+    );
+  }
