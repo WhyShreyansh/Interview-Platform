@@ -112,3 +112,23 @@ export function CreateInterviewDialog() {
               <p className="text-sm text-destructive">{errors.candidateEmail.message}</p>
             )}
           </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" placeholder="Frontend Engineer — Round 1" {...register("title")} />
+            {errors.title && <p className="text-sm text-destructive">{errors.title.message}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="candidateEmail">Candidate email</Label>
+            <Input
+              id="candidateEmail"
+              type="email"
+              placeholder="candidate@example.com"
+              {...register("candidateEmail")}
+            />
+            {errors.candidateEmail && (
+              <p className="text-sm text-destructive">{errors.candidateEmail.message}</p>
+            )}
+          </div>
