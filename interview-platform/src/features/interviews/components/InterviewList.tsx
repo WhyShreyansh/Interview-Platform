@@ -111,3 +111,22 @@ export function InterviewList({
                   <span className="text-xs text-muted-foreground">({otherRole})</span>
                 </div>
               </div>
+
+              <Button
+                asChild
+                className="mt-1 w-full"
+                disabled={!canJoin}
+                variant={canJoin ? "default" : "outline"}
+              >
+                <Link href={canJoin ? `/room/${interview.roomId}` : "#"}>
+                  <Video className="mr-2 h-4 w-4" />
+                  {canJoin ? "Join interview" : "Unavailable"}
+                </Link>
+              </Button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
