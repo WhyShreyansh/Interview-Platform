@@ -67,3 +67,12 @@ export function CreateInterviewDialog() {
         toast.error(result.error);
         return;
       }
+
+      toast.success("Interview scheduled!");
+      reset();
+      setOpen(false);
+      router.refresh();
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
