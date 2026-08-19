@@ -32,3 +32,23 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+
+const DURATION_OPTIONS = [30, 45, 60, 90, 120];
+
+export function CreateInterviewDialog() {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    setError,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<CreateInterviewInput>({
+    resolver: zodResolver(createInterviewSchema),
+    defaultValues: { duration: 60 },
+  });
