@@ -90,3 +90,24 @@ export function InterviewList({
                   {status.label}
                 </span>
               </div>
+
+              <div className="space-y-1.5 font-mono text-xs text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-3.5 w-3.5" />
+                  {format(interview.date, "MMM d, yyyy")}
+                  {isOverdue && <span className="text-destructive">past</span>}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-3.5 w-3.5" />
+                  {format(interview.date, "p")} · {interview.duration}min
+                </div>
+                <div className="flex items-center gap-2 font-sans text-sm text-foreground">
+                  <User className="h-3.5 w-3.5 text-muted-foreground" />
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: `hsl(var(--role-${otherRole}))` }}
+                  />
+                  {otherParty.name}
+                  <span className="text-xs text-muted-foreground">({otherRole})</span>
+                </div>
+              </div>
