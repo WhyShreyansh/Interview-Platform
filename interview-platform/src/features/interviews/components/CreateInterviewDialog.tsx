@@ -113,6 +113,27 @@ export function CreateInterviewDialog() {
             )}
           </div>
 
+          <div className="space-y-2">
+              <Label htmlFor="duration">Duration</Label>
+              <Select defaultValue="60" onValueChange={(val) => setValue("duration", Number(val))}>
+                <SelectTrigger id="duration">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {DURATION_OPTIONS.map((mins) => (
+                    <SelectItem key={mins} value={String(mins)}>
+                      {mins} minutes
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errors.duration && <p className="text-sm text-destructive">{errors.duration.message}</p>}
+              <input type="hidden" {...register("duration")} value={watch("duration")} readOnly />
+            </div>
+          </div>
+
+          
+
           
 
           <DialogFooter>
