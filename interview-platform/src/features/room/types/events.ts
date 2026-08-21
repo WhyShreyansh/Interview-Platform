@@ -23,3 +23,14 @@ export interface ClientToServerEvents {
   "timer:start": (payload: { roomId: string; durationSeconds: number; startedAt: number }) => void;
   "timer:stop": (payload: { roomId: string }) => void;
 }
+
+export interface ServerToClientEvents {
+  "room:state": (payload: { code: CodeState; participants: PresenceUser[] }) => void;
+  "presence:update": (payload: { participants: PresenceUser[] }) => void;
+  "code:change": (payload: { code: string }) => void;
+  "code:language": (payload: { language: CodeState["language"] }) => void;
+  "whiteboard:update": (payload: { elements: unknown; appState?: unknown }) => void;
+  "chat:message": (payload: ChatMessage) => void;
+  "timer:start": (payload: { durationSeconds: number; startedAt: number }) => void;
+  "timer:stop": () => void;
+}
