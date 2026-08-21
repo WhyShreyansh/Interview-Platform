@@ -6,3 +6,15 @@ export async function getRoomMessages(roomId: string) {
     orderBy: { createdAt: "asc" },
     include: { sender: { select: { id: true, name: true } } },
   });
+
+  type MessageRow = (typeof messages)[number];
+
+  return messages.map((m: MessageRow) => ({
+    id: m.id,
+    roomId: m.roomId,
+    senderId: m.senderId,
+    senderName: m.sender.name,
+    message: m.message,
+    createdAt: m.createdAt.toISOString(),
+  }));
+}
